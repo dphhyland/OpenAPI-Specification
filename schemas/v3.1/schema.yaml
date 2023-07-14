@@ -967,6 +967,12 @@ $defs:
             format: uri
           scopes:
             $ref: '#/$defs/map-of-strings'
+          authorization-details:  
+            type: object
+            additionalProperties:
+              type: array
+              items:
+                $ref: '/$defs/authorization-detail-or-reference'
         required:
           - authorizationUrl
           - tokenUrl
@@ -980,17 +986,17 @@ $defs:
     additionalProperties:
       type: array
       items:
-        type: string
+        type: string-or-authorization-detail
 
-  string-or-authType:
+  string-or-authorization-detail:
     if:
       type: object
       required:
         - $ref
     then:
-      $ref: '#/$defs/authtype-or-reference'
+      $ref: '#/$defs/authorization-detail-or-reference'
 
-  authtype-or-reference:
+  authorization-detail-or-reference:
     if:
       type: object
       required:
@@ -998,10 +1004,10 @@ $defs:
     then:
       $ref: '#/$defs/reference'
     else:
-      $ref: '#/$defs/authorization-request'
+      $ref: '#/$defs/authorization-detail'
 
-  authorization-request:
-    $comment: https://spec.openapis.org/oas/v3.1.0#authorisation-request-object
+  authorization-detail:
+    $comment: https://spec.openapis.org/oas/v3.1.0#authorisation-detail-object
     type: object
     properties:
       type:

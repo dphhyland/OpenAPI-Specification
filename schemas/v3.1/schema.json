@@ -1400,6 +1400,16 @@
             },
             "scopes": {
               "$ref": "#/$defs/map-of-strings"
+            },
+            "authorizationDetails" :
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/string-or-authorization-detail"
+                }
+              }
             }
           },
           "required": [
@@ -1418,11 +1428,11 @@
       "additionalProperties": {
         "type": "array",
         "items": {
-          "$ref": "#/$defs/string-or-authType"
+          "$ref": "#/$defs/string-or-authorization-detail"
         }
       }
     },
-    "string-or-authType": {
+    "string-or-authorization-detail": {
       "if": {
         "type": "object",
         "required": [
@@ -1430,10 +1440,10 @@
         ]
       },
       "then": {
-        "$ref": "#/$defs/authtype-or-reference"
+        "$ref": "#/$defs/authorization-detail-or-reference"
       }
     },
-    "authtype-or-reference": {
+    "authorization-detail-or-reference": {
       "if": {
         "type": "object",
         "required": [
@@ -1444,11 +1454,11 @@
         "$ref": "#/$defs/reference"
       },
       "else": {
-        "$ref": "#/$defs/authorization-request"
+        "$ref": "#/$defs/authorization-details"
       }
     },
-    "authorization-request": {
-      "$comment": "https://spec.openapis.org/oas/v3.1.0#authorisation-request-object",
+    "authorization-detail": {
+      "$comment": "https://spec.openapis.org/oas/v3.1.0#authorisation-detail-object",
       "type": "object",
       "properties": {
         "type": {

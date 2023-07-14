@@ -1418,9 +1418,49 @@
       "additionalProperties": {
         "type": "array",
         "items": {
-          "type": "string"
+          "$ref": "#/$defs/string-or-authType"
         }
       }
+    },
+    "string-or-authType": {
+      "if": {
+        "type": "object",
+        "required": [
+          "$ref"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/authtype-or-reference"
+      }
+    },
+    "authtype-or-reference": {
+      "if": {
+        "type": "object",
+        "required": [
+          "$ref"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/reference"
+      },
+      "else": {
+        "$ref": "#/$defs/authorization-request"
+      }
+    },
+    "authorization-request": {
+      "$comment": "https://spec.openapis.org/oas/v3.1.0#authorisation-request-object",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "$dynamicRef": "#meta"
+      },
+      "required": [
+        "type"
+      ]
     },
     "specification-extensions": {
       "$comment": "https://spec.openapis.org/oas/v3.1.0#specification-extensions",
